@@ -8,7 +8,7 @@ import { QUEUE_KEYS } from '../../keys';
 import { ConfigService } from '@nestjs/config';
 
 const CHANGE_STATE_SESSION_MUTATION = gql`
-  mutation ChangeStatusSessionQueue($data: ChangeStatusSessionQueueInput) {
+  mutation ChangeStatusSessionQueue($data: ChangeStatusSessionQueueInput!) {
     changeStatusSessionQueue(data: $data) {
       id
       name
