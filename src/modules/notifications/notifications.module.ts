@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { NotificationsConsumer } from './notifications.consumer';
 
 @Module({
-  imports: [ConfigModule, ConfigService],
+  imports: [ConfigModule],
   providers: [NotificationsConsumer],
 })
 export class NotificationsModule {}
