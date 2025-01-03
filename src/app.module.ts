@@ -8,7 +8,6 @@ import { ExpressAdapter } from '@bull-board/express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { QUEUE_KEYS } from './keys';
 import { SessionsModule } from './modules/sessions/sessions.module';
-import { CreditsModule } from './modules/credits/credits.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { JwtAuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/auth.guard';
@@ -73,7 +72,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     ),
     // module to process sessions
     SessionsModule,
-    CreditsModule,
     JwtAuthModule,
     NotificationsModule,
   ],
