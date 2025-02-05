@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as path from 'path';
 import { BullModule } from '@nestjs/bullmq';
 import { BullBoardModule } from '@bull-board/nestjs';
@@ -11,6 +12,8 @@ import { SessionsModule } from './modules/sessions/sessions.module';
 import { JwtAuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/auth.guard';
 import { BillingModule } from './modules/billing/billing.module';
+import { CronService } from './modules/cron/cron.service';
+import { GraphQLRequestModule } from '@golevelup/nestjs-graphql-request';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -74,7 +77,23 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     SessionsModule,
     BillingModule,
     JwtAuthModule,
+    ScheduleModule.forRoot(),
+    GraphQLRequestModule.forRootAsync(GraphQLRequestModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          endpoint: `${configService.get('SERVER_URL')}/api/graphql`,
+          options: {
+            headers: {
+              'content-type': 'application/json',
+            },
+          },
+        };
+      },
+    }),
   ],
+  providers: [CronService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
