@@ -10,6 +10,7 @@ import { QUEUE_KEYS } from './keys';
 import { SessionsModule } from './modules/sessions/sessions.module';
 import { JwtAuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/auth.guard';
+import { BillingModule } from './modules/billing/billing.module';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -71,6 +72,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     ),
     // module to process sessions
     SessionsModule,
+    BillingModule,
     JwtAuthModule,
   ],
 })
