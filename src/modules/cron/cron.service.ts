@@ -52,10 +52,10 @@ export class CronService {
             `Space ${space.id} is in status ${space.status}, trial has ended`,
           );
           await this.billingQueue.add(space.id, {
-            newStatus: 'SUSPENDED',
+            newStatus: 'PAST_DUE',
             spaceId: space.id,
           });
-          this.logger.log(`Space ${space.id} has been queue for suspended`);
+          this.logger.log(`Space ${space.id} has been queue for Past Due`);
         }
       }
     } catch (error) {
