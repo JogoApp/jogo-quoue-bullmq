@@ -38,9 +38,7 @@ export class BillingConsumer extends WorkerHost {
       const { updateSpaceByService } = await this.client.request<{
         updateSpaceByService: any;
       }>(CHANGE_STATE_SPACE_MUTATION, {
-        where: {
-          id: job.data.spaceId,
-        },
+        spaceId: job.data.spaceId,
         data: {
           status: job?.data?.newStatus,
         },
