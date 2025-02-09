@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
-import { InjectGraphQLClient } from '@golevelup/nestjs-graphql-request';
 import { gql, GraphQLClient } from 'graphql-request';
 
 const LOGIN_MUTATION = gql`
@@ -20,10 +19,13 @@ const LOGIN_MUTATION = gql`
 
 @Injectable()
 export class JwtAuthStrategy {
-  constructor(
-    private configService: ConfigService,
-    @InjectGraphQLClient() private readonly client: GraphQLClient,
-  ) {}
+  private client: GraphQLClient;
+
+  constructor(private configService: ConfigService) {
+    this.client = new GraphQLClient(
+      `${configService.get('SERVER_URL')}/api/graphql`,
+    );
+  }
 
   async login(email: string, password: string) {
     const res: any = await this.client.request<{
