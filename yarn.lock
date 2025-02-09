@@ -416,7 +416,7 @@
   dependencies:
     lodash "^4.17.21"
 
-"@golevelup/nestjs-graphql-request@^0.2.2":
+"@golevelup/nestjs-graphql-request@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@golevelup/nestjs-graphql-request/-/nestjs-graphql-request-0.2.2.tgz#480a55409659a1ff64cea9471d3ea169be378e78"
   integrity sha512-Iz1QaZK4T13o1BIb0PkeAx461H/ofUOX1N3DmP+96a9c94zwwGWajsaiEIcjT13Usd8zxBgcnIRugkt5a3ZHsw==
