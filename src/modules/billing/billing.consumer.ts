@@ -1,6 +1,7 @@
 import { Job } from 'bullmq';
 import { Injectable } from '@nestjs/common';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
+import { InjectGraphQLClient } from '@golevelup/nestjs-graphql-request';
 import { GraphQLClient, gql } from 'graphql-request';
 
 import { QUEUE_KEYS } from '../../keys';
@@ -8,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataJobType } from './type';
 
 const CHANGE_STATE_SPACE_MUTATION = gql`
-  mutation ChangeStatusSpaceQueue2(
+  mutation ChangeStatusSpaceQueue(
     $spaceId: ID!
     $data: SpaceUpdateInput!
     $token: String!
@@ -22,13 +23,11 @@ const CHANGE_STATE_SPACE_MUTATION = gql`
 @Injectable()
 @Processor(QUEUE_KEYS.billings)
 export class BillingConsumer extends WorkerHost {
-  private client: GraphQLClient;
-
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    @InjectGraphQLClient() private readonly client: GraphQLClient,
+    private readonly configService: ConfigService,
+  ) {
     super();
-    this.client = new GraphQLClient(
-      `${configService.get('SERVER_URL')}/api/graphql`,
-    );
   }
 
   async process(job: Job<DataJobType>) {

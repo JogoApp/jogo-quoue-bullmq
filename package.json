@@ -23,6 +23,7 @@
     "@bull-board/api": "^5.23.0",
     "@bull-board/express": "^5.23.0",
     "@bull-board/nestjs": "^5.23.0",
+    "@golevelup/nestjs-graphql-request": "^0.2.2",
     "@jogolabs/notification-sdk": "^1.4.0",
     "@nestjs/bullmq": "^10.2.1",
     "@nestjs/common": "^10.0.0",

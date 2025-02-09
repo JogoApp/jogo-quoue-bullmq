@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { gql, GraphQLClient } from 'graphql-request';
+import { InjectGraphQLClient } from '@golevelup/nestjs-graphql-request';
 import { ConfigService } from '@nestjs/config';
 import { Queue } from 'bullmq';
 import dayjs from 'dayjs';
@@ -21,16 +22,12 @@ const GET_SPACES_QUERY = gql`
 @Injectable()
 export class CronService {
   private readonly logger = new Logger(CronService.name);
-  private client: GraphQLClient;
 
   constructor(
+    @InjectGraphQLClient() private readonly client: GraphQLClient,
     @InjectQueue(QUEUE_KEYS.billings) private billingQueue: Queue<DataJobType>,
     private readonly configService: ConfigService,
-  ) {
-    this.client = new GraphQLClient(
-      `${configService.get('SERVER_URL')}/api/graphql`,
-    );
-  }
+  ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_1AM)
   async handleCron() {

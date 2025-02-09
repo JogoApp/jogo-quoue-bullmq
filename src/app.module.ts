@@ -13,6 +13,7 @@ import { JwtAuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/auth.guard';
 import { BillingModule } from './modules/billing/billing.module';
 import { CronService } from './modules/cron/cron.service';
+import { GraphQLRequestModule } from '@golevelup/nestjs-graphql-request';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -77,6 +78,20 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     BillingModule,
     JwtAuthModule,
     ScheduleModule.forRoot(),
+    GraphQLRequestModule.forRootAsync(GraphQLRequestModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          endpoint: `${configService.get('SERVER_URL')}/api/graphql`,
+          options: {
+            headers: {
+              'content-type': 'application/json',
+            },
+          },
+        };
+      },
+    }),
   ],
   providers: [CronService],
 })
