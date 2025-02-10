@@ -48,7 +48,7 @@ export class BillingConsumer extends WorkerHost {
       console.log('Job processed successfully');
       return updateSpaceByService;
     } catch (error) {
-      console.log(JSON.stringify(error?.data?.response));
+      console.log(JSON.stringify(error?.response));
       console.error('Error processing job:', error);
       throw new Error(error);
     }
