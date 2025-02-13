@@ -7,7 +7,7 @@ import { Queue } from 'bullmq';
 import dayjs from 'dayjs';
 import { InjectQueue } from '@nestjs/bullmq';
 import { QUEUE_KEYS } from '../../keys';
-import { DataJobType } from '../billing/type';
+import { DataJobType, StatusSpaceEnum } from '../billing/type';
 
 const GET_SPACES_QUERY = gql`
   query GetSpace($token: String!) {
@@ -52,7 +52,7 @@ export class CronService {
             `Space ${space.id} is in status ${space.status}, trial has ended`,
           );
           await this.billingQueue.add(space.id, {
-            newStatus: 'PAST_DUE',
+            newStatus: StatusSpaceEnum.PAST_DUE,
             spaceId: space.id,
           });
           this.logger.log(`Space ${space.id} has been queue for Past Due`);
