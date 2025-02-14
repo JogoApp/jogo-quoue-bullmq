@@ -1,4 +1,5 @@
 import { Job } from 'bullmq';
+import dayjs from 'dayjs';
 import { Injectable } from '@nestjs/common';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { InjectGraphQLClient } from '@golevelup/nestjs-graphql-request';
@@ -7,7 +8,6 @@ import { gql, GraphQLClient } from 'graphql-request';
 import { QUEUE_KEYS } from '../../keys';
 import { ConfigService } from '@nestjs/config';
 import { DataJobType, StatusSpaceEnum } from './type';
-import dayjs from 'dayjs';
 
 const GET_SPACE_QUERY = gql`
   query GetSpaceQueue($spaceId: ID!, $token: String!) {
